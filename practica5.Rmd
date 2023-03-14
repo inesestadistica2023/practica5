@@ -1,0 +1,57 @@
+---
+title: "Untitled"
+author: "Ines Dominguez"
+date: "2023-03-14"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Ejercicio 1
+Aplica un contraste de hipótesis basado en la media a: y1, y1 e y2
+
+```{r}
+set.seed(1)
+z <- rnorm(100)
+x <- rpois(100, 10.3)
+y <- rbinom(100, 1, .25)
+y1 <- 5*z+x*10+rnorm(100, 2, 1)
+y2 <- 5*z+x*12+rnorm(100, 2, 1)
+
+hist(y1)
+hist(y2)
+
+t.test(y1)
+t.test(y2)
+```
+
+## Ejercicio 2
+¿Por qué decimos que la correlación lineal es una prueba de correlación paramétrica?
+¿En qué se diferencian las pruebas paramétricas de las no paramétricas?
+
+Decimos que la correlación lineal es una prueba de correlación paramétrica porque se basa en la suposición de que los datos siguen una distribución normal y tienen una relación lineal entre ellos. Es decir, la prueba asume que los datos son paramétricos, es decir, que tienen ciertas propiedades estadísticas, como una distribución normal y una varianza constante.
+
+Las pruebas paramétricas se diferencian de las pruebas no paramétricas en que las primeras asumen que los datos tienen ciertas propiedades estadísticas, como una distribución normal y una varianza constante, mientras que las pruebas no paramétricas no hacen estas suposiciones y se basan en los rangos de los datos en lugar de en los valores exactos. En otras palabras, las pruebas no paramétricas se utilizan cuando no se puede asumir que los datos siguen una distribución normal o cuando los datos son ordinales o categóricos.
+
+Algunas diferencias entre las pruebas paramétricas y no paramétricas incluyen:
+
+    Las pruebas paramétricas requieren que se cumplan ciertas suposiciones sobre los datos, mientras que las pruebas no paramétricas no lo hacen.
+    Las pruebas paramétricas son más poderosas que las no paramétricas cuando se cumplen las suposiciones necesarias, pero las pruebas no paramétricas son más robustas y se pueden utilizar en una variedad de situaciones.
+    Las pruebas paramétricas suelen ser más fáciles de interpretar, mientras que las pruebas no paramétricas pueden ser más difíciles de interpretar debido a la naturaleza de los rangos de los datos en lugar de los valores exactos.
+
+
+
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+## Ejercicio 3
+
+Calcula la correlación entre las variables almacenadas en la tabla ‘data’. ¿Qué
+variables se encuentran más asociadas?
+
+
+

@@ -53,5 +53,143 @@ plot(pressure)
 Calcula la correlación entre las variables almacenadas en la tabla ‘data’. ¿Qué
 variables se encuentran más asociadas?
 
+```{r echo=TRUE}
+correlacion <- correlation(data)
+correlacion
+install.packages("corrplot")
+library(corrplot)
+corrplot(correlacion, method = "color", type = "upper")
+```
+con la función 'correlation' podemos saber la correlación entre las variables de nuestra tabla
+
+   
+
+para encontrar las correlaciones mas fuertes, debemos instalarnos primero el paquete 'corrplot' y cargarlo. Podemos graficar la matriz de correlación usando corrplot. Esto generará un gráfico de matriz de correlación en el que las correlaciones más fuertes se muestran en colores más oscuros. Los valores en la diagonal principal son siempre 1, ya que representan la correlación perfecta entre una variable y sí misma
 
 
+## Ejercicio 4
+Calcula los coeficientes de correlación de las variables junto con el nivel de
+significancia (p-value) en 1 solo gráfico. Interpreta los resultados.
+
+```{r}
+install.packages("GGally")
+library(GGally)
+matriz_corr <- cor(data)
+pvalue_matriz <- cor.mtest(data)$p
+```
+también se realiza con el paquete 'corrplot' y configurando la opción 'p.mat' en TRUE. Calculamos la correlación (ya hecho) y calculamos p-values con 'cor.test'
+
+
+#Ejercicio 5
+Emplea una función para obtener en una matriz de correlación lineal, IC 95% y p-
+value de todas las variables en el data frame ‘data’.
+
+```{r}
+install.packages("Hmisc")
+library(Hmisc)
+matriz_correlacion <- rcor(as.matrix(data))
+
+```
+
+Podemos usar la función rcorr() del paquete Hmisc para obtener una matriz de correlación lineal, intervalos de confianza del 95% y p-values de todas las variables de un data frame.
+
+#Ejercicio 6
+Visualiza gráficamente la correlación lineal existente entre las variables ‘longitud’ y ‘peso’. 
+
+```{r}
+library(ggplot2)
+ggplot(data, aes (peso, longitud)) + geom_point () + geom_smooth(method = "lm", se = FALSE)
+
+
+```
+
+
+#Ejercicio 7
+Emplea la librería `corrplot()` para visualizar la correlación entre variables.
+
+```{r}
+correl_matriz <- cor(data)
+install.packages("corrplot")
+library(corrplot)
+corrplot(correl_matriz, method = "color", type = "upper", order = "hclust",tl.col = "black", tl.srt = 45) 
+
+```
+    
+    corel_matriz <- cor(data): calculamos la matriz de correlación de data y la guardamos en la variable correl_matriz.
+    library(corrplot): cargamos la librería corrplot.
+    corrplot(correl_matriz, method = "color", type = "upper", order = "hclust", tl.col = "black", tl.srt = 45): utilizamos la función corrplot() para visualizar la matriz de correlación correl_matriz con los siguientes argumentos:
+
+    method = "color": utilizamos un método de color para visualizar la matriz de correlación.
+    type = "upper": mostramos solamente la mitad superior de la matriz.
+    order = "hclust": reordenamos las variables utilizando un algoritmo de clustering jerárquico.
+    tl.col = "black": establecemos el color del texto en negro.
+    tl.srt = 45: rotamos el texto de las etiquetas de las variables 45 grados.
+
+El resultado de este código es la siguiente visualización de la matriz de correlación de data
+
+
+#Ejercicio 8
+A partir de la siguiente secuencia de valores numéricos:
+• Distancia (km): 1.1,100.2,90.3,5.4,57.5,6.6,34.7,65.8,57.9,86.1
+• Número de cuentas (valor absoluto): 110,2,6,98,40,94,31,5,8,10
+a) Crea 2 vectores: 'distancia' y 'n_piezas' para almacenarlos en un data frame
+
+```{r}
+distancia <- c(1.1,100.2,90.3,5.4,57.5,6.6,34.7,65.8,57.9,86.1)
+n_piezaas <- c(110,2,6,98,40,94,31,5,8,10)
+```
+
+b)Calcula el coeficiente de correlación
+
+```{r}
+cor(distancia, n_piezaas)
+
+```
+esto nos indica que no hay correlación entre los vectores
+
+c)Calcula el nivel de significancia
+usaremos  la prueba de correlación de Pearson, que evalúa si la correlación entre los dos vectores es significativamente diferente de cero.
+
+```{r}
+cor.test(distancia, n_piezaas)
+
+```
+d)Calcula el Intervalo de confianza al 95% en relación con el coeficiente de correlación
+se usa la misma función que en el apartado anterior, ya que nos muestra el intervalo de confianza al 95% '95 percent confidence interval'
+
+```{r}
+cor.test(distancia, n_piezaas)
+```
+e)¿Qué intensidad y dirección presentan ambas variables?
+Para calcular la intensidad de dos variables en R, la medida más común es el coeficiente de correlación de Pearson (r), que indica la fuerza y la dirección de la relación lineal entre las dos variables. El coeficiente de correlación puede variar entre -1 y 1, donde un valor de -1 indica una correlación negativa perfecta, un valor de 1 indica una correlación positiva perfecta y un valor de 0 indica la ausencia de correlación lineal.
+```{r}
+cor(distancia, n_piezaas)
+```
+si el coeficiente de correlación es 1, indica una correlación positiva perfecta entre las dos variables. Si el coeficiente de correlación hubiera sido -1, esto habría indicado una correlación negativa perfecta. Al ser 0, indica la ausencia de correlación lineal entre las dos variables.
+
+
+f)¿Es significativa esta relación?
+Sí, porque si el coeficiente de correlación es positivo, esto indica una relación directa o positiva entre las dos variables, lo que significa que a medida que una variable aumenta, la otra variable también tiende a aumentar. Si el coeficiente de correlación es negativo, esto indica una relación inversa o negativa entre las dos variables, lo que significa que a medida que una variable aumenta, la otra variable tiende a disminuir.
+
+g)Resulta apropiado afirmar la correlación (o no) entre variables con un tamaño muestral tan reducido (n=10)
+En general, es más difícil establecer la existencia de una correlación significativa entre dos variables cuando se tiene un tamaño muestral pequeño, ya que el poder estadístico de la prueba disminuye. Esto se debe a que el tamaño muestral pequeño puede aumentar la variabilidad en los datos y reducir la capacidad de detectar una verdadera correlación.
+
+En el caso de un tamaño muestral tan reducido como n=10, es importante tener en cuenta que cualquier correlación observada podría deberse simplemente al azar y no reflejar una verdadera relación entre las variables. Por lo tanto, es importante ser cauteloso al interpretar los resultados de una prueba de correlación en una muestra tan pequeña.
+
+
+## Ejercicio 9
+Explícame con un ejemplo en R la diferencia entre una relación lineal y monótona entre 2 variables.
+
+la principal diferencia entre una relación lineal y monótona es que una relación lineal se puede representar mediante una línea recta en un gráfico de dispersión, mientras que una relación monótona no necesariamente puede representarse mediante una línea recta y puede tener una forma curva o en zigzag. Además, una relación lineal implica que un cambio en una variable está directamente relacionado con un cambio proporcional en la otra variable, mientras que una relación monótona solo implica una tendencia creciente o decreciente entre las dos variables.
+
+## Ejercicio 10
+¿Qué tipo de prueba de correlación se aplica a las variables que experimentan una relación monótona? Expón un ejemplo en R
+
+Para evaluar la relación monótona entre dos variables, se puede utilizar la prueba de correlación de rangos de Spearman, que se basa en los rangos de las observaciones en lugar de los valores brutos de las variables.
+
+La prueba de correlación de rangos de Spearman mide la fuerza y la dirección de la relación entre dos variables, utilizando el coeficiente de correlación de Spearman, que varía de -1 a 1. Un valor de 1 indica una correlación positiva perfecta, mientras que un valor de -1 indica una correlación negativa perfecta. Un valor de 0 indica que no hay correlación.
+```{r}
+correlation <- cor.test(distancia, n_piezaas, method = "spearman")
+correlation
+```
+El resultado indica que hay una fuerte correlación negativa (monótona) entre 'distancia' y 'n_piezaas,'con un coeficiente de correlación de Spearman de -0.92 y un valor de p de 0.0001302. Esto significa que podemos rechazar la hipótesis nula de que no hay correlación y concluir que existe una relación monótona significativa entre 'distancia' y 'n_piezaas'
